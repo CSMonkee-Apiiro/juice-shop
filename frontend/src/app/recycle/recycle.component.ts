@@ -10,7 +10,6 @@ import { Component, type OnInit, ViewChild, inject } from '@angular/core'
 import { UntypedFormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-import { FormSubmitService } from '../Services/form-submit.service'
 import { AddressComponent } from '../address/address.component'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
@@ -32,12 +31,11 @@ library.add(faPaperPlane)
   imports: [MatCardModule, TranslateModule, MatFormFieldModule, MatLabel, MatInputModule, FormsModule, ReactiveFormsModule, MatError, AddressComponent, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCheckbox, MatButtonModule, MatCardImage, MatCardContent]
 })
 export class RecycleComponent implements OnInit {
-  private readonly recycleService = inject(RecycleService);
-  private readonly userService = inject(UserService);
-  private readonly configurationService = inject(ConfigurationService);
-  private readonly formSubmitService = inject(FormSubmitService);
-  private readonly translate = inject(TranslateService);
-  private readonly snackBarHelperService = inject(SnackBarHelperService);
+  private readonly recycleService = inject(RecycleService)
+  private readonly userService = inject(UserService)
+  private readonly configurationService = inject(ConfigurationService)
+  private readonly translate = inject(TranslateService)
+  private readonly snackBarHelperService = inject(SnackBarHelperService)
 
   @ViewChild('addressComp', { static: true }) public addressComponent: AddressComponent
   public requestorControl: UntypedFormControl = new UntypedFormControl({ value: '', disabled: true }, [])
@@ -67,12 +65,10 @@ export class RecycleComponent implements OnInit {
 
     this.initRecycle()
     this.findAll()
-
-    this.formSubmitService.attachEnterKeyHandler('recycle-form', 'recycleButton', () => { this.save() })
   }
 
   initRecycle () {
-    this.userService.whoAmI().subscribe({
+    this.userService.whoAmI(['id', 'email']).subscribe({
       next: (data) => {
         this.recycle = {}
         this.recycle.UserId = data.id

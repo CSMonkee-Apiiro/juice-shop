@@ -30,15 +30,15 @@ import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar'
   imports: [MatToolbar, MatToolbarRow, MatNavList, MatButtonModule, MatListSubheaderCssMatStyler, TranslateModule, MatListItem, RouterLink, MatIconModule, NgClass, MatDivider]
 })
 export class SidenavComponent implements OnInit {
-  private readonly administrationService = inject(AdministrationService);
-  private readonly challengeService = inject(ChallengeService);
-  private readonly ngZone = inject(NgZone);
-  private readonly io = inject(SocketIoService);
-  private readonly userService = inject(UserService);
-  private readonly cookieService = inject(CookieService);
-  private readonly router = inject(Router);
-  private readonly configurationService = inject(ConfigurationService);
-  private readonly loginGuard = inject(LoginGuard);
+  private readonly administrationService = inject(AdministrationService)
+  private readonly challengeService = inject(ChallengeService)
+  private readonly ngZone = inject(NgZone)
+  private readonly io = inject(SocketIoService)
+  private readonly userService = inject(UserService)
+  private readonly cookieService = inject(CookieService)
+  private readonly router = inject(Router)
+  private readonly configurationService = inject(ConfigurationService)
+  private readonly loginGuard = inject(LoginGuard)
 
   public applicationName = 'OWASP Juice Shop'
   public showGitHubLink = true
@@ -96,6 +96,7 @@ export class SidenavComponent implements OnInit {
     this.cookieService.remove('token')
     sessionStorage.removeItem('bid')
     sessionStorage.removeItem('itemTotal')
+    sessionStorage.removeItem('guestBasket')
     this.userService.isLoggedIn.next(false)
     this.ngZone.run(async () => await this.router.navigate(['/']))
   }
@@ -123,7 +124,7 @@ export class SidenavComponent implements OnInit {
   }
 
   getUserDetails () {
-    this.userService.whoAmI().subscribe({
+    this.userService.whoAmI(['email']).subscribe({
       next: (user: any) => {
         this.userEmail = user.email
       },
@@ -160,8 +161,12 @@ export class SidenavComponent implements OnInit {
   startHackingInstructor () {
     this.onToggleSidenav()
     console.log('Starting instructions for challenge "Score Board"')
-    import(/* webpackChunkName: "tutorial" */ '../../hacking-instructor').then(module => {
-      module.startHackingInstructorFor('Score Board')
+    this.launchHackingInstructor('Score Board')
+  }
+
+  protected launchHackingInstructor (challengeName: string) {
+    import('../../hacking-instructor').then(module => {
+      module.startHackingInstructorFor(challengeName)
     })
   }
 }
