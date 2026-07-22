@@ -1,4 +1,15 @@
 -
+  email: kevin
+  password: 'kevin123'
+  key: kevin
+  role: 'admin'
+  securityQuestion:
+    id: 2
+    answer: 'Apiiro'
+  feedback:
+    comment: 'I wish my back did not hurt!'
+    rating: 5
+-
   email: admin
   password: 'admin123'
   key: admin
