@@ -82,6 +82,11 @@
       cardNum: 4716943969046208
       expMonth: 2
       expYear: 2081
+  card2:
+    - fullName: 'Bender2'
+      cardNum: 4716943969046209
+      expMonth: 3
+      expYear: 2091
 -
   email: bjoern.kimminich@gmail.com
   username: bkimminich
